@@ -3,149 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Sens Cloud - High End Edition</title>
+    <title>GOD MODE - PRO SENS VIP</title>
     <style>
-        :root { --gold: #ffb400; --bg: #030508; --card-bg: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: #e1e1e1; margin: 0; padding-bottom: 50px; }
-        
-        .premium-header { 
-            background: linear-gradient(135deg, #1a202c 0%, #030508 100%); 
-            padding: 50px 20px; text-align: center; border-bottom: 2px solid var(--gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .search-wrapper { padding: 0 25px; margin-top: -30px; }
-        #main-search { 
-            width: 100%; padding: 18px; border-radius: 50px; border: 1px solid var(--gold);
-            background: #12151c; color: #fff; font-size: 1.1rem; outline: none;
-            box-shadow: 0 5px 15px rgba(255,180,0,0.2);
-        }
+        :root { --neon: #00ffcc; --gold: #ffcc00; --bg: #000; }
+        body { font-family: 'Orbitron', sans-serif; background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; }
 
-        .category-scroll { display: flex; overflow-x: auto; padding: 25px; gap: 15px; scrollbar-width: none; }
-        .cat-chip { 
-            background: var(--card-bg); padding: 10px 25px; border-radius: 30px; 
-            border: 1px solid rgba(255,255,255,0.1); white-space: nowrap; cursor: pointer;
-            transition: 0.4s; font-weight: 500;
-        }
-        .cat-chip.active { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255,180,0,0.4); }
+        /* Cyberpunk Background Animation */
+        .grid-bg { position: fixed; width: 200%; height: 200%; background-image: linear-gradient(rgba(0,255,204,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.05) 1px, transparent 1px); background-size: 40px 40px; transform: rotateX(60deg) translateY(-20%); z-index: -1; animation: move 10s linear infinite; }
+        @keyframes move { from { transform: rotateX(60deg) translateY(0); } to { transform: rotateX(60deg) translateY(40px); } }
 
-        .sens-grid { padding: 10px 20px; }
-        .premium-card { 
-            background: var(--card-bg); border-radius: 20px; padding: 25px; margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.1); position: relative;
-            backdrop-filter: blur(15px); animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .god-header { padding: 80px 20px; text-align: center; background: radial-gradient(circle, #111, #000); border-bottom: 4px solid var(--neon); text-transform: uppercase; }
+        .glitch { font-size: 2.5rem; font-weight: 900; color: var(--neon); text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; animation: glitch 1s infinite; }
+        @keyframes glitch { 0% { text-shadow: 2px 2px #ff00ff; } 50% { text-shadow: -2px -2px #00ffff; } 100% { text-shadow: 2px 2px #ff00ff; } }
 
-        .brand-tag { 
-            position: absolute; top: 0; right: 0; background: var(--gold); color: #000;
-            padding: 5px 15px; border-bottom-left-radius: 20px; font-weight: bold; font-size: 0.8rem;
-        }
+        .search-container { padding: 25px; margin-top: -45px; }
+        #god-search { width: 100%; padding: 22px; border-radius: 5px; border: 2px solid var(--neon); background: rgba(0,0,0,0.9); color: var(--neon); font-size: 1.2rem; font-family: 'Courier New'; box-shadow: 0 0 30px rgba(0,255,204,0.4); outline: none; }
 
-        .model-title { font-size: 1.4rem; color: #fff; margin: 0 0 10px 0; }
-        .setup-type { color: var(--gold); font-size: 0.9rem; margin-bottom: 20px; display: block; }
-        
-        .code-panel { 
-            background: #000; padding: 15px; border-radius: 12px; display: flex;
-            justify-content: space-between; align-items: center; border: 1px dashed var(--gold);
+        .card-container { padding: 20px; }
+        .god-card { 
+            background: rgba(10,10,10,0.8); border: 1px solid var(--neon); border-radius: 0; padding: 30px; margin-bottom: 30px;
+            position: relative; transition: 0.3s; clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
         }
-        .final-code { font-family: 'Courier New', monospace; color: #00ff00; font-size: 1.2rem; font-weight: bold; }
-        .copy-action { background: var(--gold); border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .god-card::before { content: 'GOD MODE'; position: absolute; top: 0; right: 0; background: var(--neon); color: #000; font-size: 0.6rem; padding: 2px 10px; font-weight: bold; }
+        .god-card:active { transform: scale(0.98); box-shadow: 0 0 50px var(--neon); }
+
+        .model-name { font-size: 1.8rem; letter-spacing: 2px; color: var(--gold); }
+        .code-panel { background: #111; padding: 20px; margin-top: 20px; border-left: 10px solid var(--neon); display: flex; justify-content: space-between; align-items: center; }
+        .btn-god { background: var(--neon); color: #000; border: none; padding: 12px 30px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
 <body>
-
-    <div class="premium-header">
-        <h1 style="color: var(--gold); letter-spacing: 2px; margin: 0;">ULTIMATE PRO SENS</h1>
-        <p style="opacity: 0.6;">High-End Cloud Database V4.0</p>
+    <div class="grid-bg"></div>
+    <div class="god-header">
+        <h1 class="glitch">GOD SENS V99</h1>
+        <p style="letter-spacing: 10px; font-size: 0.7rem; color: var(--gold);">No Recoil - Absolute Power</p>
     </div>
 
-    <div class="search-wrapper">
-        <input type="text" id="main-search" placeholder="ရှာဖွေလိုသော ဖုန်းမော်ဒယ်ကို ရိုက်ထည့်ပါ..." onkeyup="runSearch()">
+    <div class="search-container">
+        <input type="text" id="god-search" placeholder=">>> SEARCH_DEVICE_MODEL..." onkeyup="godFilter()">
     </div>
 
-    <div class="category-scroll">
-        <div class="cat-chip active" onclick="switchCat('all', this)">All Devices</div>
-        <div class="cat-chip" onclick="switchCat('iphone', this)">iPhone</div>
-        <div class="cat-chip" onclick="switchCat('ipad', this)">iPad</div>
-        <div class="cat-chip" onclick="switchCat('xiaomi', this)">Xiaomi/Redmi</div>
-        <div class="cat-chip" onclick="switchCat('samsung', this)">Samsung</div>
-        <div class="cat-chip" onclick="switchCat('oppo', this)">OPPO</div>
-        <div class="cat-chip" onclick="switchCat('vivo', this)">Vivo</div>
-    </div>
-
-    <div class="sens-grid" id="main-list"></div>
+    <div class="card-container" id="god-list"></div>
 
     <script>
-        const cloudData = [
-            // iPhone 10 to 17
-            { b: 'iPhone', m: 'iPhone 17 Pro Max', t: '5 Finger Claw + Full Gyro', c: '1717-9000-0000-V1' },
-            { b: 'iPhone', m: 'iPhone 16 Pro Max', t: 'Pro Player High Sens', c: '1616-8800-1122-V2' },
-            { b: 'iPhone', m: 'iPhone 15 Pro Max', t: 'Standard Stable Gyro', c: '1515-7766-5544-V3' },
-            { b: 'iPhone', m: 'iPhone 14 Pro Max', t: 'Close Range Expert', c: '1414-2233-4455-V4' },
-            { b: 'iPhone', m: 'iPhone 13 Pro Max', t: 'Medium Range Focus', c: '1313-0099-8877-V5' },
-            { b: 'iPhone', m: 'iPhone 12 Pro Max', t: 'Fast Target Tracking', c: '1212-1122-3344-V6' },
-            { b: 'iPhone', m: 'iPhone 11 Pro Max', t: 'Balanced Setup', c: '1111-5544-3322-V7' },
-            { b: 'iPhone', m: 'iPhone X / 10', t: 'Legacy Optimized', c: '1010-8877-6655-V8' },
-            
-            // iPad
-            { b: 'iPad', m: 'iPad Pro M4 (2025)', t: '6 Finger iPad Mode', c: '9900-M4PRO-SENS' },
-            { b: 'iPad', m: 'iPad mini 6', t: '4 Finger High Sens', c: '6677-MINI6-GYRO' },
-
-            // Xiaomi
-            { b: 'Xiaomi', m: 'Xiaomi 14 Ultra', t: 'Expert Performance', c: '1414-MI-ULTRA-S1' },
-            { b: 'Xiaomi', m: 'Redmi Note 13 Pro+', t: 'Budget Gaming Master', c: '1313-REDMI-PRO' },
-            { b: 'Xiaomi', m: 'POCO F6 Pro', t: 'Full Power Sens', c: '0066-POCO-F6' },
-
-            // Samsung
-            { b: 'Samsung', m: 'Samsung S24 Ultra', t: 'AI Aim Optimized', c: '2424-SAM-S24U' },
-            { b: 'Samsung', m: 'Samsung S23 Ultra', t: 'Zero Recoil Setup', c: '2323-SAM-S23U' },
-
-            // OPPO & Vivo
-            { b: 'OPPO', m: 'OPPO Find X7 Ultra', t: 'Premium Fluidity', c: '0707-OPPO-FIND' },
-            { b: 'Vivo', m: 'Vivo X100 Pro', t: 'High Stability Mode', c: '1000-VIVO-X100' }
+        const copySfx = new Audio('https://www.soundjay.com/buttons/sounds/button-30.mp3');
+        const godData = [
+            { b: 'IPHONE', m: 'IPHONE 17 PRO MAX', t: 'GOD GYRO / 5-FINGER', c: 'GOD-1717-PRO' },
+            { b: 'IPHONE', m: 'IPHONE 16 PRO MAX', t: 'ULTRA STABLE V2', c: 'GOD-1616-VVIP' },
+            { b: 'IPHONE', m: 'IPHONE 10 / X', t: 'LEGACY MASTER', c: 'GOD-X-ELITE' },
+            { b: 'XIAOMI', m: 'XIAOMI 14 ULTRA', t: 'HYPER-DRIVE SENS', c: 'MI14-GOD-MODE' },
+            { b: 'SAMSUNG', m: 'SAMSUNG S24 ULTRA', t: 'AI-TARGET LOCK', c: 'S24U-GOD-SENS' },
+            { b: 'OPPO', m: 'OPPO FIND X7 ULTRA', t: 'CYBER-STABILITY', c: 'X7-ULTRA-GOD' },
+            { b: 'VIVO', m: 'VIVO X100 PRO', t: 'NEON-TRACKING', c: 'X100-GOD-MODE' }
         ];
 
-        function display(fBrand = 'all', fText = '') {
-            const list = document.getElementById('main-list');
+        function renderGod(f = '') {
+            const list = document.getElementById('god-list');
             list.innerHTML = '';
-            cloudData.forEach(item => {
-                const matchBrand = (fBrand === 'all' || item.b.toLowerCase() === fBrand);
-                const matchText = item.m.toLowerCase().includes(fText.toLowerCase());
-                if (matchBrand && matchText) {
+            godData.forEach(d => {
+                if (d.m.toLowerCase().includes(f.toLowerCase())) {
                     list.innerHTML += `
-                        <div class="premium-card">
-                            <span class="brand-tag">${item.b}</span>
-                            <h2 class="model-title">${item.m}</h2>
-                            <span class="setup-type">${item.t}</span>
+                        <div class="god-card">
+                            <div style="color:var(--neon); font-size:0.7rem;">SYSTEM.DEVICE.${d.b}</div>
+                            <h2 class="model-name">${d.m}</h2>
+                            <p style="color:#aaa; font-size:0.8rem;">${d.t}</p>
                             <div class="code-panel">
-                                <span class="final-code">${item.c}</span>
-                                <button class="copy-action" onclick="doCopy('${item.c}')">COPY</button>
+                                <span style="color:#00ff00; font-family:monospace; font-size:1.3rem;">${d.c}</span>
+                                <button class="btn-god" onclick="godCopy('${d.c}')">EXECUTE</button>
                             </div>
                         </div>`;
                 }
             });
         }
 
-        function switchCat(brand, el) {
-            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-            display(brand);
+        function godFilter() { renderGod(document.getElementById('god-search').value); }
+        function godCopy(c) {
+            navigator.clipboard.writeText(c);
+            copySfx.play();
+            if (navigator.vibrate) navigator.vibrate(100);
+            alert("SYSTEM: CODE_EXECUTED_SUCCESSFULLY");
         }
-
-        function runSearch() {
-            const txt = document.getElementById('main-search').value;
-            const activeB = document.querySelector('.cat-chip.active').innerText.toLowerCase().split('/')[0];
-            display(activeB === 'all devices' ? 'all' : activeB, txt);
-        }
-
-        function doCopy(val) {
-            navigator.clipboard.writeText(val);
-            alert("VIP Code Copied Successfully!");
-        }
-
-        display();
+        renderGod();
     </script>
 </body>
 </html>
