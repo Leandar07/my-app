@@ -1,22 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="my">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Checker Pro V2</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background: #eef2f3; padding-top: 50px; }
-        .app-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: inline-block; width: 80%; }
-        h1 { color: #2c3e50; }
-        p { color: #7f8c8d; }
-        .btn { background: #3498db; color: white; border: none; padding: 12px 25px; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        .btn:active { background: #2980b9; transform: scale(0.95); }
+        body { font-family: sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; text-align: center; }
+        .card { background: #1e293b; padding: 20px; border-radius: 20px; margin-bottom: 20px; border: 1px solid #334155; }
+        h2 { color: #38bdf8; }
+        .status { font-size: 1.2rem; margin: 10px 0; color: #94a3b8; }
+        .btn { background: #38bdf8; color: #0f172a; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; margin-top: 10px; font-size: 16px; }
+        .btn-test { background: #f43f5e; color: white; }
     </style>
 </head>
 <body>
-    <div class="app-card">
-        <h1>မင်္ဂလာပါ ခင်ဗျာ! ✨</h1>
-        <p>ဒါက ကျွန်တော့်ရဲ့ ပထမဆုံး Android App ပါ။</p>
-        <button class="btn" onclick="alert('Hello! အဆင်ပြေပါတယ်ခင်ဗျာ။')">နှိပ်ကြည့်ပါ</button>
+    <h2>Phone Checker Pro V2 🛠️</h2>
+    
+    <div class="card">
+        <h3>🔋 Battery Info</h3>
+        <div id="bat-level" class="status">Level: -- %</div>
+        <div id="bat-charging" class="status">Status: Checking...</div>
     </div>
+
+    <div class="card">
+        <h3>⚙️ Hardware Test</h3>
+        <button class="btn" onclick="testVibrate()">📳 Vibrate Test (တုန်ခါမှုစစ်ရန်)</button>
+        <button class="btn btn-test" onclick="testFlash()">🔦 Flashlight Test (မီးသီးစစ်ရန်)</button>
+    </div>
+
+    <script>
+        // Battery Logic
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(bat => {
+                const update = () => {
+                    document.getElementById('bat-level').innerText = "Level: " + Math.round(bat.level * 100) + "%";
+                    document.getElementById('bat-charging').innerText = bat.charging ? "⚡ Charging" : "🔌 Not Charging";
+                };
+                update();
+                bat.onlevelchange = update;
+                bat.onchargingchange = update;
+            });
+        }
+
+        function testVibrate() {
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            } else {
+                alert("ဒီဖုန်းက Vibration မရပါ");
+            }
+        }
+
+        async function testFlash() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                const track = stream.getVideoTracks()[0];
+                const imageCapture = new ImageCapture(track);
+                const photoCapabilities = await imageCapture.getPhotoCapabilities();
+                // Note: Standard web API has limits on torch, this is a basic test
+                alert("ကင်မရာစနစ် စတင်နေပါပြီ...");
+                track.stop();
+            } catch (e) {
+                alert("Flashlight စစ်ရန် Permission လိုအပ်ပါသည်");
+            }
+        }
+    </script>
 </body>
 </html>
-
