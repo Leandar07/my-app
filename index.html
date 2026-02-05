@@ -3,126 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOD SENS CLOUD V99</title>
+    <title>EXPLORE MYANMAR VIP</title>
     <style>
-        :root { --neon: #00ffcc; --gold: #ffcc00; --bg: #000; }
-        body { font-family: sans-serif; background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; }
+        :root { --main: #00d4ff; --gold: #ffcc00; --dark: #050505; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: #fff; margin: 0; }
         
-        /* Cyber Animation Background */
-        .grid-bg { position: fixed; width: 200%; height: 200%; background-image: linear-gradient(rgba(0,255,204,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.05) 1px, transparent 1px); background-size: 40px 40px; transform: rotateX(60deg) translateY(-20%); z-index: -1; animation: move 10s linear infinite; }
-        @keyframes move { from { transform: rotateX(60deg) translateY(0); } to { transform: rotateX(60deg) translateY(40px); } }
-
-        .header { padding: 50px 20px; text-align: center; border-bottom: 3px solid var(--neon); background: rgba(0,0,0,0.8); }
-        .glitch { font-size: 2rem; font-weight: bold; color: var(--neon); text-shadow: 2px 2px #ff00ff; text-transform: uppercase; }
+        .header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1544644176-2f1f04383a54?auto=format&fit=crop&w=800&q=80'); background-size: cover; padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--main); }
         
-        .search-container { padding: 20px; position: sticky; top: 0; background: var(--bg); z-index: 100; }
-        #search-input { width: 100%; padding: 15px; border-radius: 5px; border: 2px solid var(--neon); background: #111; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; }
+        .search-area { padding: 20px; position: sticky; top: 0; background: rgba(5,5,5,0.9); z-index: 100; backdrop-filter: blur(10px); }
+        #search-input { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2px solid var(--main); background: #111; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
 
-        .list-container { padding: 15px; }
-        .god-card { 
-            background: rgba(20,20,20,0.9); border: 1px solid var(--neon); border-left: 5px solid var(--gold);
-            padding: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
-
-        .brand { font-size: 0.7rem; color: var(--neon); letter-spacing: 2px; }
-        .model { font-size: 1.2rem; margin: 5px 0; color: #fff; }
-        .sens-info { color: var(--gold); font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; }
+        .container { padding: 15px; }
+        .place-card { background: #151515; border-radius: 20px; overflow: hidden; margin-bottom: 25px; border: 1px solid #222; transition: 0.3s; }
         
-        .code-box { 
-            background: #000; padding: 12px; border: 1px dashed #444; 
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .code-text { color: #00ff00; font-family: monospace; font-weight: bold; }
-        .btn-copy { background: var(--neon); color: #000; border: none; padding: 8px 15px; font-weight: bold; cursor: pointer; border-radius: 3px; }
+        .place-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 2px solid var(--main); }
+        
+        .place-info { padding: 20px; }
+        .place-name { font-size: 1.4rem; color: var(--gold); font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .place-desc { font-size: 0.95rem; color: #bbb; line-height: 1.6; }
+        
+        .tag-row { margin-top: 15px; display: flex; gap: 10px; }
+        .tag { background: rgba(0,212,255,0.1); color: var(--main); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; border: 1px solid var(--main); }
     </style>
 </head>
 <body>
 
-    <div class="grid-bg"></div>
-
     <div class="header">
-        <div class="glitch">GOD SENS V99</div>
-        <p style="font-size: 0.7rem; color: var(--gold); margin-top: 5px;">ULTIMATE NO RECOIL DATABASE</p>
+        <h1 style="margin:0; letter-spacing: 2px; text-shadow: 2px 2px #000;">EXPLORE MYANMAR</h1>
+        <p style="color: var(--main); font-weight: bold; margin-top: 10px;">The Ultimate Travel Guide</p>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="ဖုန်းမော်ဒယ် ရိုက်ရှာပါ (e.g. Mi 10, Reno 4, iPhone 15)..." onkeyup="search()">
+    <div class="search-area">
+        <input type="text" id="search-input" placeholder="နေရာအမည် ရိုက်ရှာပါ..." onkeyup="search()">
     </div>
 
-    <div class="list-container" id="main-list"></div>
+    <div class="container" id="place-list"></div>
 
     <script>
-        // ဖုန်းမော်ဒယ် ၂၀၀ ကျော်လုံး ပါဝင်သော Database
-        const godData = [
-            // XIAOMI MI & MIX
-            { b: 'XIAOMI', m: 'Mi 10, 10 Pro, 10 Lite, 10T, 10T Pro, 10 Ultra', s: '98-95-85-78', c: '7252-1010-9988-001' },
-            { b: 'XIAOMI', m: 'Mi 11, 11 Pro, 11 Ultra, 11 Lite, 11 Lite 5G, MIX Fold', s: '95-90-88-80', c: '7143-1111-2233-556' },
-            { b: 'XIAOMI', m: 'Xiaomi 12, 12 Pro, 12X, 12 Lite, 12T, 12T Pro, 12S, 12S Pro, 12S Ultra', s: '94-88-85-82', c: '7321-1212-4455-778' },
-            { b: 'XIAOMI', m: 'Xiaomi 13, 13 Pro, 13 Ultra, 13 Lite, 13T, 13T Pro', s: '92-86-84-80', c: '7452-1313-0099-112' },
-            { b: 'XIAOMI', m: 'Xiaomi 14, 14 Pro, 14 Ultra, 14T, 14T Pro, 15, 15 Pro, 15 Ultra, 15T, 15T Pro', s: '90-84-82-78', c: '7563-1415-8877-334' },
-            { b: 'XIAOMI', m: 'Xiaomi 16, 16 Pro, 16 Ultra, 17, 17 Pro', s: '88-82-78-74', c: '7785-1617-3344-556' },
-
-            // REDMI SERIES
-            { b: 'REDMI', m: 'Redmi Note 9, 9 Pro, Redmi 9, 9A, 9C', s: '100-98-90-85', c: '6891-0909-1122-334' },
-            { b: 'REDMI', m: 'Redmi Note 10, 10 Pro, 10 Pro Max, 10S, Redmi 10', s: '98-95-88-82', c: '6902-1010-4455-667' },
-            { b: 'REDMI', m: 'Redmi Note 11, 11 Pro, 11 Pro 5G, 11S, Redmi 10 5G, 12C', s: '96-92-86-80', c: '7013-1111-7788-990' },
-            { b: 'REDMI', m: 'Redmi Note 12, 12 Pro, 12 Pro+, Redmi 12, 13C, Note 13, 13 Pro, 13 Pro+', s: '95-90-84-78', c: '7124-1213-0011-223' },
-            { b: 'REDMI', m: 'Redmi Note 14, 14 Pro, 14 Pro+, Redmi 14, 15, Note 15, 15 Pro, 15C', s: '92-86-80-74', c: '7346-1415-6677-889' },
-
-            // POCO SERIES
-            { b: 'POCO', m: 'POCO X3, X3 NFC, X3 Pro, M3, X4 Pro, F3, F4, M4 Pro', s: '100-95-85-80', c: '6852-3333-9988-112' },
-            { b: 'POCO', m: 'POCO X5, X5 Pro, F5, F5 Pro, X6, X6 Pro, F6, X7, F7, X8, F8', s: '95-88-80-76', c: '7074-5555-5566-778' },
-
-            // OPPO SERIES
-            { b: 'OPPO', m: 'Reno 1 to 7 Z, A1k to A96, F11 to F21 Pro 5G', s: '100-95-88-80', c: '6752-1122-3344-556' },
-            { b: 'OPPO', m: 'Reno 8 to 11 Pro, A17 to A105, F23 to F29 Pro', s: '96-90-84-78', c: '6863-5566-7788-990' },
-            { b: 'OPPO', m: 'Find X2 to Find X9 Ultra, Reno 9 to 10 Pro+', s: '94-88-82-76', c: '6974-9900-1122-334' },
-
-            // VIVO & iQOO
-            { b: 'VIVO', m: 'iQOO 3 to 14, X60 to X300 Pro, V20 to V50 Pro', s: '95-92-85-80', c: '7252-8899-0011-223' },
-            { b: 'VIVO', m: 'S9 to S23, Y12s to Y65, V27, V29, V30, V40', s: '98-95-90-85', c: '7363-2233-4455-667' },
-
-            // IPHONE & IPAD
-            { b: 'IPHONE', m: 'iPhone 11, 12, 13, 14, 15, 16, 17, 18 Pro Max/Plus/SE', s: '95-90-85-80', c: '7252-1717-9988-001' },
-            { b: 'IPAD', m: 'iPad Pro (M1-M5), Air (M2), Mini 6/7, 8th-12th Gen', s: '100-98-95-90', c: '7363-IPAD-GOD-VVIP' },
-
-            // TABLETS
-            { b: 'TABLET', m: 'Samsung Tab S7-S9 Ultra, Xiaomi Pad 5-6 Max, Redmi Pad, Huawei MatePad, Lenovo Tab, Realme/OnePlus Pad', s: '100-98-92-88', c: '7474-TAB-MASTER-VIP' }
+        // ပုံတွေကို Online Link များဖြင့် ကိုယ်တိုင်ထည့်ပေးထားသည်
+        const travelData = [
+            { n: "ပုဂံ (Bagan)", d: "မြန်မာ့ယဉ်ကျေးမှု၏ အသည်းနှလုံးဖြစ်ပြီး ရှေးဟောင်းဘုရားပုထိုးပေါင်း (၂၀၀၀) ကျော်ကို တစ်နေရာတည်းတွင် ဖူးမြော်နိုင်ပါသည်။", t: "Cultural", img: "https://images.unsplash.com/photo-1544644176-2f1f04383a54?auto=format&fit=crop&w=600&q=60" },
+            { n: "အင်းလေး (Inle Lake)", d: "ရှမ်းကုန်းပြင်မြင့်ပေါ်ရှိ လှပသောရေကန်ကြီးဖြစ်ပြီး ရေပေါ်စိုက်ခင်းများနှင့် ထူးခြားသော လှေလှော်ဓလေ့ရှိပါသည်။", t: "Nature", img: "https://images.unsplash.com/photo-1520115045363-2337d1219b67?auto=format&fit=crop&w=600&q=60" },
+            { n: "ချောင်းသာ (Chaung Thar)", d: "မိသားစုနှင့် သူငယ်ချင်းများ ပျော်ပျော်ပါးပါး အပန်းဖြေနိုင်မယ့် အနီးဆုံးပင်လယ်ကမ်းခြေဖြစ်ပါသည်။", t: "Beach", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=60" },
+            { n: "ပြင်ဦးလွင် (Pyin Oo Lwin)", d: "အေးမြသော ရာသီဥတု၊ လှပသော ပန်းခြံများနှင့် ရေတံခွန်များရှိသည့် တောင်ပေါ်အပန်းဖြေမြို့တော် ဖြစ်ပါသည်။", t: "Hill Station", img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=60" },
+            { n: "ငပလီ (Ngapali Beach)", d: "ကြည်လင်ပြာလွင်သော ရေပြင်နှင့် အဖြူရောင်သဲသောင်ပြင်ရှိသည့် မြန်မာပြည်၏ အလှဆုံး ပင်လယ်ကမ်းခြေဖြစ်ပါသည်။", t: "Luxury", img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=600&q=60" },
+            { n: "မန္တလေး (Mandalay)", d: "မြန်မာတို့၏ နောက်ဆုံးမင်းနေပြည်တော်ဖြစ်ပြီး ကုသိုလ်တော်ဘုရားနှင့် ဦးပိန်တံတားတို့မှာ ထင်ရှားလှပါသည်။", t: "Royal City", img: "https://images.unsplash.com/photo-1544085311-11a028465b03?auto=format&fit=crop&w=600&q=60" }
         ];
 
         function search() {
-            const input = document.getElementById('search-input').value.toLowerCase();
-            const list = document.getElementById('main-list');
+            const input = document.getElementById('search-input').value.toLowerCase().trim();
+            const list = document.getElementById('place-list');
             list.innerHTML = '';
 
-            if(input === "") { list.innerHTML = '<p style="text-align:center; color:#555;">မော်ဒယ်အမည် ရိုက်ထည့်ပါ...</p>'; return; }
-
-            godData.forEach(data => {
-                if(data.m.toLowerCase().includes(input) || data.b.toLowerCase().includes(input)) {
+            travelData.forEach(p => {
+                if(p.n.toLowerCase().includes(input) || p.t.toLowerCase().includes(input)) {
                     list.innerHTML += `
-                        <div class="god-card">
-                            <div class="brand">${data.b} SYSTEM ACTIVE</div>
-                            <div class="model">${data.m}</div>
-                            <div class="sens-info">BEST SENS: ${data.s}</div>
-                            <div class="code-box">
-                                <span class="code-text">${data.c}</span>
-                                <button class="btn-copy" onclick="copyCode('${data.c}')">COPY</button>
+                        <div class="place-card">
+                            <img src="${p.img}" class="place-img" alt="${p.n}">
+                            <div class="place-info">
+                                <div class="place-name">📍 ${p.n}</div>
+                                <div class="place-desc">${p.d}</div>
+                                <div class="tag-row">
+                                    <span class="tag"># ${p.t}</span>
+                                    <span class="tag"># Myanmar</span>
+                                </div>
                             </div>
                         </div>`;
                 }
             });
         }
-
-        function copyCode(code) {
-            navigator.clipboard.writeText(code);
-            if (navigator.vibrate) navigator.vibrate(100);
-            alert("ကုဒ်ကို ကော်ပီကူးပြီးပါပြီ! ဂိမ်းထဲတွင် Cloud Method ဖြင့် ထည့်သွင်းပါ။");
-        }
-
-        // Initial Message
-        document.getElementById('main-list').innerHTML = '<p style="text-align:center; color:#555;">Search model to see secret codes...</p>';
+        search(); // Start
     </script>
 </body>
 </html>
