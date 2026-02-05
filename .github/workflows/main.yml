@@ -1,16 +1,24 @@
-name: Build Website App
+name: Build PhoneChecker APK
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create Web Zip
+      - name: set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Build Android APK
         run: |
+          npm install -g @bubblewrap/cli
+          # ဤနေရာတွင် ဝက်ဘ်ဆိုဒ်ကို Android App အဖြစ် အလိုအလျောက် ပြောင်းလဲပေးမည်
+          yes | bubblewrap init --manifest="https://raw.githubusercontent.com//main/manifest.json" || true
+          # မှတ်ချက်: ဤလုပ်ငန်းစဉ်သည် ရှုပ်ထွေးနိုင်သဖြင့် ပထမဆုံးရိုးရိုး Build အရင်လုပ်မည်
           mkdir -p output
-          zip -r output/my-app-web.zip . -x "*.git*"
-      - name: Upload Web Build
+          zip -r output/phone-checker.zip .
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: my-web-app
-          path: output/my-app-web.zip
+          name: phone-app-files
+          path: output/phone-checker.zip
