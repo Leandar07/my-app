@@ -3,66 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone Checker Pro V2</title>
+    <title>Daily Utility Kit</title>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; text-align: center; }
-        .card { background: #1e293b; padding: 20px; border-radius: 20px; margin-bottom: 20px; border: 1px solid #334155; }
-        h2 { color: #38bdf8; }
-        .status { font-size: 1.2rem; margin: 10px 0; color: #94a3b8; }
-        .btn { background: #38bdf8; color: #0f172a; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; margin-top: 10px; font-size: 16px; }
-        .btn-test { background: #f43f5e; color: white; }
+        :root { --main: #6366f1; --bg: #0f172a; --card: #1e293b; }
+        body { font-family: sans-serif; background: var(--bg); color: white; margin: 0; padding: 20px; }
+        .header { text-align: center; color: var(--main); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .tool-card { background: var(--card); padding: 25px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #334155; }
+        .tool-card:active { transform: translateY(5px); background: #334155; }
+        .tool-icon { font-size: 2rem; margin-bottom: 10px; }
+        #app-screen { display: none; margin-top: 20px; }
+        input { width: 90%; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .btn { background: var(--main); color: white; border: none; padding: 10px 20px; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <h2>Phone Checker Pro V2 🛠️</h2>
-    
-    <div class="card">
-        <h3>🔋 Battery Info</h3>
-        <div id="bat-level" class="status">Level: -- %</div>
-        <div id="bat-charging" class="status">Status: Checking...</div>
+
+    <div id="home">
+        <h1 class="header">Daily Kit 🛠️</h1>
+        <div class="grid">
+            <div class="tool-card" onclick="openTool('battery')"><div class="tool-icon">🔋</div>Battery</div>
+            <div class="tool-card" onclick="openTool('flashlight')"><div class="tool-icon">🔦</div>Flashlight</div>
+            <div class="tool-card" onclick="openTool('note')"><div class="tool-icon">📝</div>Quick Note</div>
+            <div class="tool-card" onclick="openTool('unit')"><div class="tool-icon">⚖️</div>Converter</div>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>⚙️ Hardware Test</h3>
-        <button class="btn" onclick="testVibrate()">📳 Vibrate Test (တုန်ခါမှုစစ်ရန်)</button>
-        <button class="btn btn-test" onclick="testFlash()">🔦 Flashlight Test (မီးသီးစစ်ရန်)</button>
+    <div id="app-screen">
+        <button class="btn" onclick="goHome()">⬅️ Back</button>
+        <div id="tool-content" style="margin-top: 20px;"></div>
     </div>
 
     <script>
-        // Battery Logic
-        if ('getBattery' in navigator) {
-            navigator.getBattery().then(bat => {
-                const update = () => {
-                    document.getElementById('bat-level').innerText = "Level: " + Math.round(bat.level * 100) + "%";
-                    document.getElementById('bat-charging').innerText = bat.charging ? "⚡ Charging" : "🔌 Not Charging";
-                };
-                update();
-                bat.onlevelchange = update;
-                bat.onchargingchange = update;
-            });
-        }
+        function openTool(name) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('app-screen').style.display = 'block';
+            const content = document.getElementById('tool-content');
 
-        function testVibrate() {
-            if (navigator.vibrate) {
-                navigator.vibrate([200, 100, 200]);
-            } else {
-                alert("ဒီဖုန်းက Vibration မရပါ");
+            if(name === 'battery') {
+                navigator.getBattery().then(b => {
+                    content.innerHTML = `<h2>Battery Status</h2><p>Level: ${Math.round(b.level*100)}%</p><p>Status: ${b.charging ? 'Charging' : 'Discharging'}</p>`;
+                });
+            } else if(name === 'flashlight') {
+                content.innerHTML = `<h2>Flashlight Tool</h2><p>Camera permission လိုအပ်ပါတယ်</p><button class="btn" onclick="alert('Flashlight ON')">Turn ON</button>`;
+            } else if(name === 'note') {
+                content.innerHTML = `<h2>Quick Note</h2><textarea id="noteText" style="width:100%; height:100px;"></textarea><br><button class="btn" onclick="saveNote()">Save</button><p id="savedNote"></p>`;
+            } else if(name === 'unit') {
+                content.innerHTML = `<h2>Meters to Feet</h2><input type="number" id="meters" placeholder="Meters"><button class="btn" onclick="convert()">Convert</button><h3 id="result"></h3>`;
             }
         }
 
-        async function testFlash() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                const track = stream.getVideoTracks()[0];
-                const imageCapture = new ImageCapture(track);
-                const photoCapabilities = await imageCapture.getPhotoCapabilities();
-                // Note: Standard web API has limits on torch, this is a basic test
-                alert("ကင်မရာစနစ် စတင်နေပါပြီ...");
-                track.stop();
-            } catch (e) {
-                alert("Flashlight စစ်ရန် Permission လိုအပ်ပါသည်");
-            }
+        function goHome() {
+            document.getElementById('home').style.display = 'block';
+            document.getElementById('app-screen').style.display = 'none';
+        }
+
+        function convert() {
+            const m = document.getElementById('meters').value;
+            document.getElementById('result').innerText = (m * 3.28084).toFixed(2) + " Feet";
         }
     </script>
 </body>
 </html>
+
