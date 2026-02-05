@@ -3,64 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Sensitivity Hub</title>
+    <title>Pro Sens Cloud - VIP</title>
     <style>
-        :root { --accent: #ffb400; --bg: #0a0c10; --card: #1c1f26; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 15px; }
-        .header { text-align: center; padding: 20px; color: var(--accent); }
-        .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 4px solid var(--accent); }
-        .device-name { font-weight: bold; font-size: 1.2rem; color: #fff; }
-        .code-box { background: #000; padding: 10px; border-radius: 5px; margin-top: 10px; color: #00ff00; font-family: monospace; display: flex; justify-content: space-between; }
-        .btn-copy { background: var(--accent); border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .add-btn { position: fixed; bottom: 20px; right: 20px; background: var(--accent); width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 30px; color: #000; box-shadow: 0 4px 10px rgba(255,180,0,0.4); }
+        :root { --gold: #ffb400; --bg: #05070a; --glass: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; overflow-x: hidden; }
+        
+        /* Login Page Section */
+        #login-page { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle, #1a202c 0%, #05070a 100%); }
+        .login-card { background: var(--glass); padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); width: 80%; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: rgba(255,255,255,0.1); color: white; }
+        .btn-gold { background: var(--gold); color: black; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 15px; }
+
+        /* Main App Section */
+        #main-app { display: none; padding: 15px; }
+        .nav-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
+        .tab { background: var(--glass); padding: 8px 20px; border-radius: 20px; white-space: nowrap; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
+        .tab.active { background: var(--gold); color: black; }
+
+        .sens-card { background: var(--glass); border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .brand-badge { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; background: var(--gold); color: black; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
+        .copy-btn { background: rgba(255,180,0,0.2); color: var(--gold); border: 1px solid var(--gold); padding: 5px 15px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Pro Sens Hub 🎯</h1>
-        <p>Best Sensitivity for PUBG</p>
-    </div>
-
-    <div id="list">
-        <div class="card">
-            <div class="device-name">iPhone 14 Pro Max</div>
-            <p>Type: 4 Finger + Gyro</p>
-            <div class="code-box">
-                <span id="code1">7252-1234-5678-9012</span>
-                <button class="btn-copy" onclick="copyCode('code1')">Copy</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="device-name">Redmi Note 12 Pro</div>
-            <p>Type: 2 Finger (No Gyro)</p>
-            <div class="code-box">
-                <span id="code2">1122-3344-5566-7788</span>
-                <button class="btn-copy" onclick="copyCode('code2')">Copy</button>
-            </div>
+    <div id="login-page">
+        <div class="login-card">
+            <h1 style="color: var(--gold);">PRO SENS VIP</h1>
+            <p>Access Professional Player Settings</p>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" placeholder="Access Code (Premium)">
+            <button class="btn-gold" onclick="login()">LOGIN TO CLOUD</button>
         </div>
     </div>
 
-    <button class="add-btn" onclick="addSens()">+</button>
+    <div id="main-app">
+        <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 id="user-display">Welcome, User</h2>
+            <div style="color: var(--gold);">⭐ Premium</div>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="tab active" onclick="filter('all', this)">All</div>
+            <div class="tab" onclick="filter('iphone', this)">iPhone</div>
+            <div class="tab" onclick="filter('ipad', this)">iPad</div>
+            <div class="tab" onclick="filter('xiaomi', this)">Xiaomi</div>
+            <div class="tab" onclick="filter('oppo', this)">OPPO</div>
+        </div>
+
+        <div id="sens-container">
+            </div>
+    </div>
 
     <script>
-        function copyCode(id) {
-            const code = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(code);
-            alert("Code Copied: " + code);
+        const data = [
+            { brand: 'iphone', model: 'iPhone 15 Pro Max', type: '5 Finger + Gyro', code: '7252-9988-1122-001' },
+            { brand: 'ipad', model: 'iPad Pro M2', type: '6 Finger Claw', code: '1100-2233-4455-667' },
+            { brand: 'xiaomi', model: 'Xiaomi 13 Ultra', type: 'Full Gyro / High Sens', code: '8877-6655-4433-221' },
+            { brand: 'oppo', model: 'OPPO Find X6 Pro', type: 'Non-Gyro Stable', code: '4455-2211-0099-887' }
+        ];
+
+        function login() {
+            const user = document.getElementById('username').value || "Pro Gamer";
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('user-display').innerText = "Hi, " + user;
+            renderCards('all');
         }
 
-        function addSens() {
-            let device = prompt("Device Name:");
-            let code = prompt("Enter Sens Code:");
-            if (device && code) {
-                const newList = document.getElementById('list');
-                const newCard = document.createElement('div');
-                newCard.className = 'card';
-                newCard.innerHTML = `<div class="device-name">${device}</div><p>Type: Added by User</p><div class="code-box"><span>${code}</span><button class="btn-copy">Copy</button></div>`;
-                newList.prepend(newCard);
-            }
+        function renderCards(filterBrand) {
+            const container = document.getElementById('sens-container');
+            container.innerHTML = '';
+            data.forEach(item => {
+                if (filterBrand === 'all' || item.brand === filterBrand) {
+                    container.innerHTML += `
+                        <div class="sens-card">
+                            <span class="brand-badge">${item.brand}</span>
+                            <div style="font-size: 1.1rem; font-weight: bold;">${item.model}</div>
+                            <p style="color: #ccc; font-size: 0.9rem;">${item.type}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                                <span style="font-family: monospace; color: #00ff00;">${item.code}</span>
+                                <button class="copy-btn" onclick="copyText('${item.code}')">Copy</button>
+                            </div>
+                        </div>`;
+                }
+            });
+        }
+
+        function filter(brand, el) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            renderCards(brand);
+        }
+
+        function copyText(val) {
+            navigator.clipboard.writeText(val);
+            alert("Code Copied!");
         }
     </script>
 </body>
