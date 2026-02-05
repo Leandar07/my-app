@@ -3,103 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPS STABILIZER PRO</title>
+    <title>ULTRA FPS UNLOCKER</title>
     <style>
-        :root { --neon: #00ffcc; --danger: #ff4444; --bg: #0a0e14; }
-        body { font-family: 'Courier New', monospace; background: var(--bg); color: #fff; margin: 0; text-align: center; }
+        :root { --neon-blue: #00d4ff; --neon-purple: #9d00ff; --bg: #05080a; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 50px; }
+        .header { background: linear-gradient(45deg, #0f171e, #1a2a3a); padding: 40px 20px; text-align: center; border-bottom: 2px solid var(--neon-blue); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         
-        .header { padding: 40px 20px; border-bottom: 2px solid var(--neon); background: linear-gradient(180deg, #16212d, #0a0e14); }
-        .status-panel { margin: 20px; padding: 20px; border: 1px solid #333; border-radius: 15px; background: rgba(255,255,255,0.05); }
+        .container { padding: 20px; }
+        .game-card { background: #111d27; border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #222; position: relative; overflow: hidden; }
+        .game-title { font-size: 1.2rem; font-weight: bold; color: var(--neon-blue); margin-bottom: 10px; }
+        .fps-badge { position: absolute; top: 15px; right: 15px; background: var(--neon-purple); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
         
-        .fps-meter { font-size: 3rem; font-weight: bold; color: var(--neon); text-shadow: 0 0 20px var(--neon); }
-        .label { color: #888; font-size: 0.8rem; text-transform: uppercase; }
+        .unlock-btn { width: 100%; padding: 12px; border-radius: 8px; border: none; background: linear-gradient(90deg, #00d4ff, #0055ff); color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .unlock-btn:active { transform: scale(0.95); opacity: 0.8; }
 
-        .boost-btn { 
-            width: 200px; height: 200px; border-radius: 50%; border: none; 
-            background: radial-gradient(circle, #00ffcc, #008877); 
-            color: #000; font-size: 1.5rem; font-weight: bold; 
-            box-shadow: 0 0 30px rgba(0,255,204,0.4); cursor: pointer;
-            margin: 30px 0; transition: 0.3s;
-        }
-        .boost-btn:active { transform: scale(0.9); box-shadow: 0 0 10px var(--neon); }
-
-        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .feature-item { padding: 15px; background: #151b24; border-radius: 10px; border-left: 3px solid var(--neon); text-align: left; }
-        .feature-item h3 { margin: 0; font-size: 0.9rem; color: var(--neon); }
-        .feature-item p { margin: 5px 0 0; font-size: 0.7rem; color: #aaa; }
-
-        /* Animation */
-        .scanning { animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        /* Status Animations */
+        .status-bar { height: 4px; width: 0%; background: var(--neon-blue); margin-top: 15px; transition: 1s; border-radius: 2px; }
+        .active-status .status-bar { width: 100%; box-shadow: 0 0 10px var(--neon-blue); }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1 style="margin:0; letter-spacing: 5px;">FPS BOOSTER</h1>
-        <p class="label">System Optimization Active</p>
+<div class="header">
+    <h1 style="margin:0; font-size: 1.8rem; letter-spacing: 2px;">ULTRA UNLOCKER</h1>
+    <p style="color: #888; font-size: 0.75rem; margin-top: 10px;">V2.0 - NEXT GEN OPTIMIZER</p>
+</div>
+
+<div class="container">
+    <div class="game-card" id="pubg-card">
+        <div class="game-title">PUBG MOBILE</div>
+        <div class="fps-badge">120 FPS SUPPORT</div>
+        <p style="font-size: 0.8rem; color: #aaa;">Unlock Extreme Frame Rate & Zero Lag Engine.</p>
+        <button class="unlock-btn" onclick="boost('pubg-card')">ACTIVATE 120 FPS</button>
+        <div class="status-bar"></div>
     </div>
 
-    <div class="status-panel">
-        <div class="label">Current Stability</div>
-        <div class="fps-meter" id="fps-display">60.0</div>
-        <div class="label" id="status-text">System Normal</div>
+    <div class="game-card" id="mlbb-card">
+        <div class="game-title">MOBILE LEGENDS</div>
+        <div class="fps-badge">60 FPS SUPPORT</div>
+        <p style="font-size: 0.8rem; color: #aaa;">Smooth gameplay with Ultra Graphics Unlock.</p>
+        <button class="unlock-btn" onclick="boost('mlbb-card')">ACTIVATE HIGH FPS</button>
+        <div class="status-bar"></div>
     </div>
 
-    <button class="boost-btn" onclick="startBoost()">OPTIMIZE</button>
-
-    <div class="feature-grid">
-        <div class="feature-item">
-            <h3>GPU Turbo</h3>
-            <p>Stabilize frame rates for heavy games.</p>
-        </div>
-        <div class="feature-item">
-            <h3>RAM Clean</h3>
-            <p>Clear background apps to free memory.</p>
-        </div>
-        <div class="feature-item">
-            <h3>Net Stabilizer</h3>
-            <p>Reduce ping and network latency.</p>
-        </div>
-        <div class="feature-item">
-            <h3>Heat Cool</h3>
-            <p>Reduce CPU usage to cool down.</p>
-        </div>
+    <div class="game-card" id="ef-card">
+        <div class="game-title">eFOOTBALL 2026</div>
+        <div class="fps-badge">60 FPS SUPPORT</div>
+        <p style="font-size: 0.8rem; color: #aaa;">Stable frames for competitive matches.</p>
+        <button class="unlock-btn" onclick="boost('ef-card')">ACTIVATE STABLE FPS</button>
+        <div class="status-bar"></div>
     </div>
+</div>
 
-    <script>
-        function startBoost() {
-            const btn = document.querySelector('.boost-btn');
-            const status = document.getElementById('status-text');
-            const fps = document.getElementById('fps-display');
+<script>
+    function boost(cardId) {
+        const card = document.getElementById(cardId);
+        const btn = card.querySelector('.unlock-btn');
+        const bar = card.querySelector('.status-bar');
+        
+        btn.innerHTML = "UNLOOCKING...";
+        btn.disabled = true;
+        card.classList.add('active-status');
 
-            btn.disabled = true;
-            btn.innerHTML = "BOOSTING...";
-            status.innerHTML = "Scanning Junk Files...";
-            status.classList.add('scanning');
+        if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
 
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-
-            let count = 0;
-            const interval = setInterval(() => {
-                count++;
-                fps.innerHTML = (60 + Math.random() * 2).toFixed(1);
-                
-                if(count == 10) status.innerHTML = "Cleaning RAM Cache...";
-                if(count == 20) status.innerHTML = "Optimizing GPU Registry...";
-                
-                if(count >= 30) {
-                    clearInterval(interval);
-                    status.innerHTML = "DEVICE OPTIMIZED!";
-                    status.classList.remove('scanning');
-                    status.style.color = "#00ffcc";
-                    btn.innerHTML = "DONE";
-                    btn.style.background = "#333";
-                    btn.style.color = "#888";
-                    alert("Optimization Complete! Your device is now ready for gaming.");
-                }
-            }, 100);
-        }
-    </script>
+        setTimeout(() => {
+            btn.innerHTML = "UNLOCKED ✅";
+            btn.style.background = "#222";
+            btn.style.color = "#00ffcc";
+            alert("Success! High FPS has been unlocked for this game.");
+        }, 2500);
+    }
+</script>
 </body>
 </html>
+
