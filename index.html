@@ -3,103 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Sens Cloud - VIP</title>
+    <title>Pro Sens Cloud - High End Edition</title>
     <style>
-        :root { --gold: #ffb400; --bg: #05070a; --glass: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; overflow-x: hidden; }
+        :root { --gold: #ffb400; --bg: #030508; --card-bg: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: #e1e1e1; margin: 0; padding-bottom: 50px; }
         
-        /* Login Page Section */
-        #login-page { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle, #1a202c 0%, #05070a 100%); }
-        .login-card { background: var(--glass); padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); width: 80%; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: rgba(255,255,255,0.1); color: white; }
-        .btn-gold { background: var(--gold); color: black; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 15px; }
+        .premium-header { 
+            background: linear-gradient(135deg, #1a202c 0%, #030508 100%); 
+            padding: 50px 20px; text-align: center; border-bottom: 2px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .search-wrapper { padding: 0 25px; margin-top: -30px; }
+        #main-search { 
+            width: 100%; padding: 18px; border-radius: 50px; border: 1px solid var(--gold);
+            background: #12151c; color: #fff; font-size: 1.1rem; outline: none;
+            box-shadow: 0 5px 15px rgba(255,180,0,0.2);
+        }
 
-        /* Main App Section */
-        #main-app { display: none; padding: 15px; }
-        .nav-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
-        .tab { background: var(--glass); padding: 8px 20px; border-radius: 20px; white-space: nowrap; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
-        .tab.active { background: var(--gold); color: black; }
+        .category-scroll { display: flex; overflow-x: auto; padding: 25px; gap: 15px; scrollbar-width: none; }
+        .cat-chip { 
+            background: var(--card-bg); padding: 10px 25px; border-radius: 30px; 
+            border: 1px solid rgba(255,255,255,0.1); white-space: nowrap; cursor: pointer;
+            transition: 0.4s; font-weight: 500;
+        }
+        .cat-chip.active { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255,180,0,0.4); }
 
-        .sens-card { background: var(--glass); border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
-        .brand-badge { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; background: var(--gold); color: black; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
-        .copy-btn { background: rgba(255,180,0,0.2); color: var(--gold); border: 1px solid var(--gold); padding: 5px 15px; border-radius: 8px; }
+        .sens-grid { padding: 10px 20px; }
+        .premium-card { 
+            background: var(--card-bg); border-radius: 20px; padding: 25px; margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.1); position: relative;
+            backdrop-filter: blur(15px); animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .brand-tag { 
+            position: absolute; top: 0; right: 0; background: var(--gold); color: #000;
+            padding: 5px 15px; border-bottom-left-radius: 20px; font-weight: bold; font-size: 0.8rem;
+        }
+
+        .model-title { font-size: 1.4rem; color: #fff; margin: 0 0 10px 0; }
+        .setup-type { color: var(--gold); font-size: 0.9rem; margin-bottom: 20px; display: block; }
+        
+        .code-panel { 
+            background: #000; padding: 15px; border-radius: 12px; display: flex;
+            justify-content: space-between; align-items: center; border: 1px dashed var(--gold);
+        }
+        .final-code { font-family: 'Courier New', monospace; color: #00ff00; font-size: 1.2rem; font-weight: bold; }
+        .copy-action { background: var(--gold); border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="login-page">
-        <div class="login-card">
-            <h1 style="color: var(--gold);">PRO SENS VIP</h1>
-            <p>Access Professional Player Settings</p>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" placeholder="Access Code (Premium)">
-            <button class="btn-gold" onclick="login()">LOGIN TO CLOUD</button>
-        </div>
+    <div class="premium-header">
+        <h1 style="color: var(--gold); letter-spacing: 2px; margin: 0;">ULTIMATE PRO SENS</h1>
+        <p style="opacity: 0.6;">High-End Cloud Database V4.0</p>
     </div>
 
-    <div id="main-app">
-        <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 id="user-display">Welcome, User</h2>
-            <div style="color: var(--gold);">⭐ Premium</div>
-        </div>
-
-        <div class="nav-tabs">
-            <div class="tab active" onclick="filter('all', this)">All</div>
-            <div class="tab" onclick="filter('iphone', this)">iPhone</div>
-            <div class="tab" onclick="filter('ipad', this)">iPad</div>
-            <div class="tab" onclick="filter('xiaomi', this)">Xiaomi</div>
-            <div class="tab" onclick="filter('oppo', this)">OPPO</div>
-        </div>
-
-        <div id="sens-container">
-            </div>
+    <div class="search-wrapper">
+        <input type="text" id="main-search" placeholder="ရှာဖွေလိုသော ဖုန်းမော်ဒယ်ကို ရိုက်ထည့်ပါ..." onkeyup="runSearch()">
     </div>
+
+    <div class="category-scroll">
+        <div class="cat-chip active" onclick="switchCat('all', this)">All Devices</div>
+        <div class="cat-chip" onclick="switchCat('iphone', this)">iPhone</div>
+        <div class="cat-chip" onclick="switchCat('ipad', this)">iPad</div>
+        <div class="cat-chip" onclick="switchCat('xiaomi', this)">Xiaomi/Redmi</div>
+        <div class="cat-chip" onclick="switchCat('samsung', this)">Samsung</div>
+        <div class="cat-chip" onclick="switchCat('oppo', this)">OPPO</div>
+        <div class="cat-chip" onclick="switchCat('vivo', this)">Vivo</div>
+    </div>
+
+    <div class="sens-grid" id="main-list"></div>
 
     <script>
-        const data = [
-            { brand: 'iphone', model: 'iPhone 15 Pro Max', type: '5 Finger + Gyro', code: '7252-9988-1122-001' },
-            { brand: 'ipad', model: 'iPad Pro M2', type: '6 Finger Claw', code: '1100-2233-4455-667' },
-            { brand: 'xiaomi', model: 'Xiaomi 13 Ultra', type: 'Full Gyro / High Sens', code: '8877-6655-4433-221' },
-            { brand: 'oppo', model: 'OPPO Find X6 Pro', type: 'Non-Gyro Stable', code: '4455-2211-0099-887' }
+        const cloudData = [
+            // iPhone 10 to 17
+            { b: 'iPhone', m: 'iPhone 17 Pro Max', t: '5 Finger Claw + Full Gyro', c: '1717-9000-0000-V1' },
+            { b: 'iPhone', m: 'iPhone 16 Pro Max', t: 'Pro Player High Sens', c: '1616-8800-1122-V2' },
+            { b: 'iPhone', m: 'iPhone 15 Pro Max', t: 'Standard Stable Gyro', c: '1515-7766-5544-V3' },
+            { b: 'iPhone', m: 'iPhone 14 Pro Max', t: 'Close Range Expert', c: '1414-2233-4455-V4' },
+            { b: 'iPhone', m: 'iPhone 13 Pro Max', t: 'Medium Range Focus', c: '1313-0099-8877-V5' },
+            { b: 'iPhone', m: 'iPhone 12 Pro Max', t: 'Fast Target Tracking', c: '1212-1122-3344-V6' },
+            { b: 'iPhone', m: 'iPhone 11 Pro Max', t: 'Balanced Setup', c: '1111-5544-3322-V7' },
+            { b: 'iPhone', m: 'iPhone X / 10', t: 'Legacy Optimized', c: '1010-8877-6655-V8' },
+            
+            // iPad
+            { b: 'iPad', m: 'iPad Pro M4 (2025)', t: '6 Finger iPad Mode', c: '9900-M4PRO-SENS' },
+            { b: 'iPad', m: 'iPad mini 6', t: '4 Finger High Sens', c: '6677-MINI6-GYRO' },
+
+            // Xiaomi
+            { b: 'Xiaomi', m: 'Xiaomi 14 Ultra', t: 'Expert Performance', c: '1414-MI-ULTRA-S1' },
+            { b: 'Xiaomi', m: 'Redmi Note 13 Pro+', t: 'Budget Gaming Master', c: '1313-REDMI-PRO' },
+            { b: 'Xiaomi', m: 'POCO F6 Pro', t: 'Full Power Sens', c: '0066-POCO-F6' },
+
+            // Samsung
+            { b: 'Samsung', m: 'Samsung S24 Ultra', t: 'AI Aim Optimized', c: '2424-SAM-S24U' },
+            { b: 'Samsung', m: 'Samsung S23 Ultra', t: 'Zero Recoil Setup', c: '2323-SAM-S23U' },
+
+            // OPPO & Vivo
+            { b: 'OPPO', m: 'OPPO Find X7 Ultra', t: 'Premium Fluidity', c: '0707-OPPO-FIND' },
+            { b: 'Vivo', m: 'Vivo X100 Pro', t: 'High Stability Mode', c: '1000-VIVO-X100' }
         ];
 
-        function login() {
-            const user = document.getElementById('username').value || "Pro Gamer";
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            document.getElementById('user-display').innerText = "Hi, " + user;
-            renderCards('all');
-        }
-
-        function renderCards(filterBrand) {
-            const container = document.getElementById('sens-container');
-            container.innerHTML = '';
-            data.forEach(item => {
-                if (filterBrand === 'all' || item.brand === filterBrand) {
-                    container.innerHTML += `
-                        <div class="sens-card">
-                            <span class="brand-badge">${item.brand}</span>
-                            <div style="font-size: 1.1rem; font-weight: bold;">${item.model}</div>
-                            <p style="color: #ccc; font-size: 0.9rem;">${item.type}</p>
-                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
-                                <span style="font-family: monospace; color: #00ff00;">${item.code}</span>
-                                <button class="copy-btn" onclick="copyText('${item.code}')">Copy</button>
+        function display(fBrand = 'all', fText = '') {
+            const list = document.getElementById('main-list');
+            list.innerHTML = '';
+            cloudData.forEach(item => {
+                const matchBrand = (fBrand === 'all' || item.b.toLowerCase() === fBrand);
+                const matchText = item.m.toLowerCase().includes(fText.toLowerCase());
+                if (matchBrand && matchText) {
+                    list.innerHTML += `
+                        <div class="premium-card">
+                            <span class="brand-tag">${item.b}</span>
+                            <h2 class="model-title">${item.m}</h2>
+                            <span class="setup-type">${item.t}</span>
+                            <div class="code-panel">
+                                <span class="final-code">${item.c}</span>
+                                <button class="copy-action" onclick="doCopy('${item.c}')">COPY</button>
                             </div>
                         </div>`;
                 }
             });
         }
 
-        function filter(brand, el) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        function switchCat(brand, el) {
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
             el.classList.add('active');
-            renderCards(brand);
+            display(brand);
         }
 
-        function copyText(val) {
-            navigator.clipboard.writeText(val);
-            alert("Code Copied!");
+        function runSearch() {
+            const txt = document.getElementById('main-search').value;
+            const activeB = document.querySelector('.cat-chip.active').innerText.toLowerCase().split('/')[0];
+            display(activeB === 'all devices' ? 'all' : activeB, txt);
         }
+
+        function doCopy(val) {
+            navigator.clipboard.writeText(val);
+            alert("VIP Code Copied Successfully!");
+        }
+
+        display();
     </script>
 </body>
 </html>
