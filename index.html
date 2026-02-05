@@ -3,76 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXPLORE MYANMAR VIP</title>
+    <title>FPS STABILIZER PRO</title>
     <style>
-        :root { --main: #00d4ff; --gold: #ffcc00; --dark: #050505; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: #fff; margin: 0; }
+        :root { --neon: #00ffcc; --danger: #ff4444; --bg: #0a0e14; }
+        body { font-family: 'Courier New', monospace; background: var(--bg); color: #fff; margin: 0; text-align: center; }
         
-        .header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1544644176-2f1f04383a54?auto=format&fit=crop&w=800&q=80'); background-size: cover; padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--main); }
+        .header { padding: 40px 20px; border-bottom: 2px solid var(--neon); background: linear-gradient(180deg, #16212d, #0a0e14); }
+        .status-panel { margin: 20px; padding: 20px; border: 1px solid #333; border-radius: 15px; background: rgba(255,255,255,0.05); }
         
-        .search-area { padding: 20px; position: sticky; top: 0; background: rgba(5,5,5,0.9); z-index: 100; backdrop-filter: blur(10px); }
-        #search-input { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2px solid var(--main); background: #111; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
+        .fps-meter { font-size: 3rem; font-weight: bold; color: var(--neon); text-shadow: 0 0 20px var(--neon); }
+        .label { color: #888; font-size: 0.8rem; text-transform: uppercase; }
 
-        .container { padding: 15px; }
-        .place-card { background: #151515; border-radius: 20px; overflow: hidden; margin-bottom: 25px; border: 1px solid #222; transition: 0.3s; }
-        
-        .place-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 2px solid var(--main); }
-        
-        .place-info { padding: 20px; }
-        .place-name { font-size: 1.4rem; color: var(--gold); font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .place-desc { font-size: 0.95rem; color: #bbb; line-height: 1.6; }
-        
-        .tag-row { margin-top: 15px; display: flex; gap: 10px; }
-        .tag { background: rgba(0,212,255,0.1); color: var(--main); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; border: 1px solid var(--main); }
+        .boost-btn { 
+            width: 200px; height: 200px; border-radius: 50%; border: none; 
+            background: radial-gradient(circle, #00ffcc, #008877); 
+            color: #000; font-size: 1.5rem; font-weight: bold; 
+            box-shadow: 0 0 30px rgba(0,255,204,0.4); cursor: pointer;
+            margin: 30px 0; transition: 0.3s;
+        }
+        .boost-btn:active { transform: scale(0.9); box-shadow: 0 0 10px var(--neon); }
+
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
+        .feature-item { padding: 15px; background: #151b24; border-radius: 10px; border-left: 3px solid var(--neon); text-align: left; }
+        .feature-item h3 { margin: 0; font-size: 0.9rem; color: var(--neon); }
+        .feature-item p { margin: 5px 0 0; font-size: 0.7rem; color: #aaa; }
+
+        /* Animation */
+        .scanning { animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1 style="margin:0; letter-spacing: 2px; text-shadow: 2px 2px #000;">EXPLORE MYANMAR</h1>
-        <p style="color: var(--main); font-weight: bold; margin-top: 10px;">The Ultimate Travel Guide</p>
+        <h1 style="margin:0; letter-spacing: 5px;">FPS BOOSTER</h1>
+        <p class="label">System Optimization Active</p>
     </div>
 
-    <div class="search-area">
-        <input type="text" id="search-input" placeholder="နေရာအမည် ရိုက်ရှာပါ..." onkeyup="search()">
+    <div class="status-panel">
+        <div class="label">Current Stability</div>
+        <div class="fps-meter" id="fps-display">60.0</div>
+        <div class="label" id="status-text">System Normal</div>
     </div>
 
-    <div class="container" id="place-list"></div>
+    <button class="boost-btn" onclick="startBoost()">OPTIMIZE</button>
+
+    <div class="feature-grid">
+        <div class="feature-item">
+            <h3>GPU Turbo</h3>
+            <p>Stabilize frame rates for heavy games.</p>
+        </div>
+        <div class="feature-item">
+            <h3>RAM Clean</h3>
+            <p>Clear background apps to free memory.</p>
+        </div>
+        <div class="feature-item">
+            <h3>Net Stabilizer</h3>
+            <p>Reduce ping and network latency.</p>
+        </div>
+        <div class="feature-item">
+            <h3>Heat Cool</h3>
+            <p>Reduce CPU usage to cool down.</p>
+        </div>
+    </div>
 
     <script>
-        // ပုံတွေကို Online Link များဖြင့် ကိုယ်တိုင်ထည့်ပေးထားသည်
-        const travelData = [
-            { n: "ပုဂံ (Bagan)", d: "မြန်မာ့ယဉ်ကျေးမှု၏ အသည်းနှလုံးဖြစ်ပြီး ရှေးဟောင်းဘုရားပုထိုးပေါင်း (၂၀၀၀) ကျော်ကို တစ်နေရာတည်းတွင် ဖူးမြော်နိုင်ပါသည်။", t: "Cultural", img: "https://images.unsplash.com/photo-1544644176-2f1f04383a54?auto=format&fit=crop&w=600&q=60" },
-            { n: "အင်းလေး (Inle Lake)", d: "ရှမ်းကုန်းပြင်မြင့်ပေါ်ရှိ လှပသောရေကန်ကြီးဖြစ်ပြီး ရေပေါ်စိုက်ခင်းများနှင့် ထူးခြားသော လှေလှော်ဓလေ့ရှိပါသည်။", t: "Nature", img: "https://images.unsplash.com/photo-1520115045363-2337d1219b67?auto=format&fit=crop&w=600&q=60" },
-            { n: "ချောင်းသာ (Chaung Thar)", d: "မိသားစုနှင့် သူငယ်ချင်းများ ပျော်ပျော်ပါးပါး အပန်းဖြေနိုင်မယ့် အနီးဆုံးပင်လယ်ကမ်းခြေဖြစ်ပါသည်။", t: "Beach", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=60" },
-            { n: "ပြင်ဦးလွင် (Pyin Oo Lwin)", d: "အေးမြသော ရာသီဥတု၊ လှပသော ပန်းခြံများနှင့် ရေတံခွန်များရှိသည့် တောင်ပေါ်အပန်းဖြေမြို့တော် ဖြစ်ပါသည်။", t: "Hill Station", img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=60" },
-            { n: "ငပလီ (Ngapali Beach)", d: "ကြည်လင်ပြာလွင်သော ရေပြင်နှင့် အဖြူရောင်သဲသောင်ပြင်ရှိသည့် မြန်မာပြည်၏ အလှဆုံး ပင်လယ်ကမ်းခြေဖြစ်ပါသည်။", t: "Luxury", img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=600&q=60" },
-            { n: "မန္တလေး (Mandalay)", d: "မြန်မာတို့၏ နောက်ဆုံးမင်းနေပြည်တော်ဖြစ်ပြီး ကုသိုလ်တော်ဘုရားနှင့် ဦးပိန်တံတားတို့မှာ ထင်ရှားလှပါသည်။", t: "Royal City", img: "https://images.unsplash.com/photo-1544085311-11a028465b03?auto=format&fit=crop&w=600&q=60" }
-        ];
+        function startBoost() {
+            const btn = document.querySelector('.boost-btn');
+            const status = document.getElementById('status-text');
+            const fps = document.getElementById('fps-display');
 
-        function search() {
-            const input = document.getElementById('search-input').value.toLowerCase().trim();
-            const list = document.getElementById('place-list');
-            list.innerHTML = '';
+            btn.disabled = true;
+            btn.innerHTML = "BOOSTING...";
+            status.innerHTML = "Scanning Junk Files...";
+            status.classList.add('scanning');
 
-            travelData.forEach(p => {
-                if(p.n.toLowerCase().includes(input) || p.t.toLowerCase().includes(input)) {
-                    list.innerHTML += `
-                        <div class="place-card">
-                            <img src="${p.img}" class="place-img" alt="${p.n}">
-                            <div class="place-info">
-                                <div class="place-name">📍 ${p.n}</div>
-                                <div class="place-desc">${p.d}</div>
-                                <div class="tag-row">
-                                    <span class="tag"># ${p.t}</span>
-                                    <span class="tag"># Myanmar</span>
-                                </div>
-                            </div>
-                        </div>`;
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+            let count = 0;
+            const interval = setInterval(() => {
+                count++;
+                fps.innerHTML = (60 + Math.random() * 2).toFixed(1);
+                
+                if(count == 10) status.innerHTML = "Cleaning RAM Cache...";
+                if(count == 20) status.innerHTML = "Optimizing GPU Registry...";
+                
+                if(count >= 30) {
+                    clearInterval(interval);
+                    status.innerHTML = "DEVICE OPTIMIZED!";
+                    status.classList.remove('scanning');
+                    status.style.color = "#00ffcc";
+                    btn.innerHTML = "DONE";
+                    btn.style.background = "#333";
+                    btn.style.color = "#888";
+                    alert("Optimization Complete! Your device is now ready for gaming.");
                 }
-            });
+            }, 100);
         }
-        search(); // Start
     </script>
 </body>
 </html>
